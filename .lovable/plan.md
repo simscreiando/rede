@@ -47,12 +47,35 @@ Fora do escopo agora: mensagens privadas, fotos em álbuns, busca avançada, not
 - Frontend: TanStack Start já configurado no projeto; rotas próprias por seção (SEO e compartilhamento), design tokens cozy/lo-fi definidos em `src/styles.css`.
 - Ordem de implementação: design system e páginas públicas → autenticação e perfil → amizades e selos → depoimentos e recados → comunidades → denúncias e moderação → painel "Meus dados".
 
-## Sobre hospedagem no GitHub / Vercel
+## Hospedagem: Lovable + GitHub + Vercel
 
-O projeto pode ser sincronizado com um repositório GitHub a partir das configurações do Lovable, e o código fica integralmente seu. Duas observações honestas:
+A cadeia funciona assim, e cada elo tem um responsável diferente:
 
-- O Lovable já publica e hospeda a aplicação com backend incluído; publicar aqui é o caminho mais curto para ter algo no ar.
-- GitHub Pages **não** serve este projeto (ele tem servidor). Vercel serve, mas exigirá um ajuste de adaptador de build e reconfiguração das variáveis de ambiente. Sugiro publicar primeiro pelo Lovable e migrar para Vercel quando o MVP estiver estável.
+```text
+Lovable (edição do código)
+   ↓ sincronização Git
+GitHub (repositório oficial, versionamento)
+   ↓ deploy automático a cada commit
+Vercel (site no ar, front + servidor)
+   ↓ chamadas autenticadas
+Lovable Cloud (banco de dados, login Google, arquivos)
+```
+
+Passos, na ordem:
+
+1. **Lovable → GitHub**: você conecta sua conta GitHub no menu "+" do chat (opção GitHub) e o Lovable cria/sincroniza o repositório. Sincronização de mão dupla: o que eu escrever aqui aparece lá, e o que for commitado lá volta para cá. Esse passo é feito por você na interface — eu não consigo autorizar sua conta GitHub.
+2. **Ajuste de build para a Vercel** (isso é o que eu faço no código): este projeto é uma aplicação com servidor, e o build atual é gerado para o ambiente do Lovable. Vou adicionar a configuração de deploy para a Vercel (`vercel.json` + alvo de build do adaptador Vercel no `vite.config.ts`), mantendo o build do Lovable funcionando em paralelo. Assim o mesmo repositório serve nos dois lugares.
+3. **GitHub → Vercel**: na Vercel você importa o repositório. O framework é detectado a partir do Vite; o comando de build e o diretório de saída já vêm definidos pelo `vercel.json` que eu incluo.
+4. **Variáveis de ambiente na Vercel**: o Lovable Cloud gera as credenciais do backend (URL do projeto e chave publicável, além das chaves de servidor). Elas precisam ser copiadas para Settings → Environment Variables na Vercel, senão o site sobe mas não conecta ao banco nem ao login. Vou deixar no repositório um `.env.example` listando exatamente quais variáveis colar, e um arquivo `DEPLOY.md` com o passo a passo.
+5. **Login Google**: a URL da Vercel (e o domínio final, quando houver) precisa ser adicionada às URLs de redirecionamento autorizadas na configuração de autenticação do Cloud. Sem isso o Google devolve erro de redirect. Também está no `DEPLOY.md`.
+
+Observações honestas:
+
+- **GitHub Pages não serve este projeto** — ele tem servidor. GitHub aqui é repositório, não hospedagem.
+- O banco e a autenticação continuam no **Lovable Cloud** mesmo quando o site está na Vercel; a Vercel hospeda a aplicação, não os dados.
+- Sugiro publicar primeiro pelo Lovable (um clique, tudo já ligado) e usar a Vercel em paralelo, para você validar a cadeia sem risco de ficar sem ambiente funcionando.
+- Enquanto não houver código de aplicação, o deploy na Vercel serve só de esqueleto. Posso fazer o ajuste de deploy agora e seguir para as telas do MVP na mesma etapa.
+
 
 ## Fora do que eu faço
 
