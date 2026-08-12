@@ -17,20 +17,22 @@ import { BADGE_KINDS, formatDate, initials, isUuid } from "@/lib/rede";
 export const Route = createFileRoute("/perfil/$id")({
   head: () => ({
     meta: [
-      { title: "Perfil — Rede" },
+      { title: "Perfil de membro — Rede" },
       {
         name: "description",
         content:
-          "Perfil na Rede: selos afetivos, depoimentos aprovados pelo titular e recados de amigos.",
+          "Perfil de membro da Rede: selos afetivos, depoimentos aprovados pelo titular e recados de amigos. Página privada, visível conforme as escolhas da pessoa.",
       },
-      { property: "og:title", content: "Perfil na Rede" },
+      { property: "og:title", content: "Perfil de membro — Rede" },
       {
         property: "og:description",
         content: "Selos afetivos, depoimentos e recados — sem nota e sem ranking de pessoas.",
       },
+      { property: "og:type", content: "profile" },
       { name: "robots", content: "noindex" },
     ],
   }),
+
   component: () => (
     <AppShell>
       <RequireAuth>
