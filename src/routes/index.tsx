@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking de pessoas, sem feed algorítmico e sem publicidade comportamental.",
+          "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico.",
       },
       { property: "og:title", content: "Rede — rede social nostálgica" },
       {
@@ -21,9 +21,37 @@ export const Route = createFileRoute("/")({
           "Uma rede social de escala humana: amizades por aceite mútuo, comunidades temáticas e depoimentos aprovados por quem recebe.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://redesaudade.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://redesaudade.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              name: "Rede",
+              url: "https://redesaudade.lovable.app",
+              description:
+                "Rede social nostálgica com perfis, comunidades, depoimentos e selos afetivos, sem ranking e sem feed algorítmico.",
+              inLanguage: "pt-BR",
+            },
+            {
+              "@type": "Organization",
+              name: "Rede",
+              url: "https://redesaudade.lovable.app",
+              description:
+                "Projeto de rede social de escala humana, com moderação humana e privacidade por padrão.",
+            },
+          ],
+        }),
+      },
+    ],
   }),
+
   component: HomePage,
 });
 
