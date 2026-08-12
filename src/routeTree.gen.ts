@@ -14,6 +14,7 @@ import { Route as AmigosRouteImport } from './routes/amigos'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
 import { Route as ComunidadesSlugRouteImport } from './routes/comunidades.$slug'
+import { Route as ConfiguracoesPerfilRouteImport } from './routes/configuracoes.perfil'
 import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const ComunidadesSlugRoute = ComunidadesSlugRouteImport.update({
   path: '/comunidades/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfiguracoesPerfilRoute = ConfiguracoesPerfilRouteImport.update({
+  id: '/configuracoes/perfil',
+  path: '/configuracoes/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerfilIdRoute = PerfilIdRouteImport.update({
   id: '/perfil/$id',
   path: '/perfil/$id',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
   '/comunidades': typeof ComunidadesIndexRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/comunidades/$slug'
+    | '/configuracoes/perfil'
     | '/perfil/$id'
     | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/comunidades/$slug'
+    | '/configuracoes/perfil'
     | '/perfil/$id'
     | '/comunidades'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/comunidades/$slug'
+    | '/configuracoes/perfil'
     | '/perfil/$id'
     | '/comunidades/'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   AmigosRoute: typeof AmigosRoute
   AuthRoute: typeof AuthRoute
   ComunidadesSlugRoute: typeof ComunidadesSlugRoute
+  ConfiguracoesPerfilRoute: typeof ConfiguracoesPerfilRoute
   PerfilIdRoute: typeof PerfilIdRoute
   ComunidadesIndexRoute: typeof ComunidadesIndexRoute
 }
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/configuracoes/perfil': {
+      id: '/configuracoes/perfil'
+      path: '/configuracoes/perfil'
+      fullPath: '/configuracoes/perfil'
+      preLoaderRoute: typeof ConfiguracoesPerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perfil/$id': {
       id: '/perfil/$id'
       path: '/perfil/$id'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AmigosRoute: AmigosRoute,
   AuthRoute: AuthRoute,
   ComunidadesSlugRoute: ComunidadesSlugRoute,
+  ConfiguracoesPerfilRoute: ConfiguracoesPerfilRoute,
   PerfilIdRoute: PerfilIdRoute,
   ComunidadesIndexRoute: ComunidadesIndexRoute,
 }
