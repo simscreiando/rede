@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DiretrizesRouteImport } from './routes/diretrizes'
 import { Route as ModeracaoRouteImport } from './routes/moderacao'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
 import { Route as ComunidadesSlugRouteImport } from './routes/comunidades.$slug'
@@ -50,6 +51,11 @@ const ModeracaoRoute = ModeracaoRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermosRoute = TermosRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
+    | '/sitemap.xml'
     | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
+    | '/sitemap.xml'
     | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
+    | '/sitemap.xml'
     | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   DiretrizesRoute: typeof DiretrizesRoute
   ModeracaoRoute: typeof ModeracaoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermosRoute: typeof TermosRoute
   ComunidadesSlugRoute: typeof ComunidadesSlugRoute
   ConfiguracoesDadosRoute: typeof ConfiguracoesDadosRoute
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/termos': {
@@ -282,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   DiretrizesRoute: DiretrizesRoute,
   ModeracaoRoute: ModeracaoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermosRoute: TermosRoute,
   ComunidadesSlugRoute: ComunidadesSlugRoute,
   ConfiguracoesDadosRoute: ConfiguracoesDadosRoute,
