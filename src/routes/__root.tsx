@@ -83,16 +83,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Rede é uma rede social nostálgica com perfis, comunidades, depoimentos e selos afetivos. Sem ranking, sem feed algorítmico.",
+          "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico.",
       },
-      { property: "og:title", content: "Rede — rede social nostálgica" },
+      { property: "og:title", content: "Rede — rede social nostálgica, sem algoritmo" },
       {
         property: "og:description",
-        content: "Perfis, comunidades e depoimentos entre amigos. Sem ranking e sem algoritmo.",
+        content: "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Rede — rede social nostálgica, sem algoritmo" },
+      { name: "twitter:description", content: "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1fd69af35e4870c448141eb9224d7bce/id-preview-07151f8a--9af6c947-7e0b-4e9f-87ff-a876b99bf996.lovable.app-1786575452317.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1fd69af35e4870c448141eb9224d7bce/id-preview-07151f8a--9af6c947-7e0b-4e9f-87ff-a876b99bf996.lovable.app-1786575452317.png" },
     ],
     links: [
       {

@@ -14,11 +14,11 @@ export const Route = createFileRoute("/")({
         content:
           "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico.",
       },
-      { property: "og:title", content: "Rede — rede social nostálgica" },
+      { property: "og:title", content: "Rede — rede social nostálgica, sem algoritmo" },
       {
         property: "og:description",
         content:
-          "Uma rede social de escala humana: amizades por aceite mútuo, comunidades temáticas e depoimentos aprovados por quem recebe.",
+          "Perfis, comunidades, depoimentos e selos afetivos em uma rede social pequena e acolhedora. Sem ranking e sem feed algorítmico.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://redesaudade.lovable.app/" },
