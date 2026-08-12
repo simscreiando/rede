@@ -97,7 +97,7 @@ function ModerationPage() {
     );
   }
 
-  async function decide(reportId: string, status: "resolved" | "dismissed") {
+  async function decide(reportId: string, status: "upheld" | "dismissed") {
     const draft = drafts[reportId];
     if (!draft?.action || draft.note.trim().length < 10) {
       toast.error("Escolha uma medida e escreva uma justificativa com pelo menos 10 caracteres.");
@@ -117,7 +117,7 @@ function ModerationPage() {
 
     const { error } = await supabase
       .from("reports")
-      .update({ status, resolved_at: new Date().toISOString() })
+      .update({ status })
       .eq("id", reportId);
     if (error) {
       toast.error("Decisão registrada, mas o status não foi atualizado.");
@@ -161,7 +161,7 @@ function ModerationPage() {
                 ) : null}
                 <p className="mt-1 text-xs text-muted-foreground">alvo: {report.target_id}</p>
 
-                {report.status === "pending" ? (
+                {report.status === "open" || report.status === "reviewing" ? (
                   <div className="mt-3 space-y-3">
                     <Select
                       value={draft.action}
@@ -188,7 +188,7 @@ function ModerationPage() {
                       placeholder="Justificativa da decisão (obrigatória)"
                     />
                     <div className="flex flex-wrap gap-2">
-                      <Button size="sm" onClick={() => decide(report.id, "resolved")}>
+                      <Button size="sm" onClick={() => decide(report.id, "upheld")}>
                         Aplicar medida
                       </Button>
                       <Button
