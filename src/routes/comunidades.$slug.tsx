@@ -16,22 +16,50 @@ import { supabase } from "@/integrations/supabase/client";
 import { formatDate } from "@/lib/rede";
 import { useProfileNames } from "@/lib/profileNames";
 
+function slugToName(slug: string) {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 export const Route = createFileRoute("/comunidades/$slug")({
-  head: () => ({
-    meta: [
-      { title: "Comunidade — Rede" },
-      {
-        name: "description",
-        content:
-          "Tópicos e conversas de uma comunidade da Rede, em ordem cronológica e com moderação humana.",
-      },
-      { property: "og:title", content: "Comunidade na Rede" },
-      {
-        property: "og:description",
-        content: "Conversas temáticas em tópicos, sem feed algorítmico.",
-      },
-    ],
-  }),
+  head: ({ params }) => {
+    const name = slugToName(params.slug);
+    const title = `Comunidade ${name} — Rede`;
+    const url = `https://redesaudade.lovable.app/comunidades/${params.slug}`;
+    return {
+      meta: [
+        { title },
+        {
+          name: "description",
+          content: `Tópicos e conversas da comunidade ${name} na Rede, em ordem cronológica e com moderação humana.`,
+        },
+        { property: "og:title", content: title },
+        {
+          property: "og:description",
+          content: `Conversas temáticas da comunidade ${name}, em tópicos e sem feed algorítmico.`,
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: `Comunidade ${name}`,
+            url,
+            isPartOf: { "@type": "WebSite", name: "Rede", url: "https://redesaudade.lovable.app" },
+          }),
+        },
+      ],
+    };
+  },
+
   component: () => (
     <AppShell>
       <RequireAuth>
