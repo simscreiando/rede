@@ -319,7 +319,7 @@ function CommunityPage() {
                     Remover tópico
                   </Button>
                 ) : null}
-                <ReportDialog targetType="community_topic" targetId={topic.id} />
+                <ReportDialog targetType="topic" targetId={topic.id} />
               </div>
 
               {openTopic === topic.id ? (
@@ -330,7 +330,7 @@ function CommunityPage() {
                         {nameOf(post.author_id)} · {formatDate(post.created_at)}
                       </p>
                       <p className="whitespace-pre-line text-sm">{post.body}</p>
-                      <ReportDialog targetType="community_post" targetId={post.id} />
+                      <ReportDialog targetType="post" targetId={post.id} />
                     </div>
                   ))}
                   {isMember ? (
