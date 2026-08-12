@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { BADGE_KINDS, badgeLabel, formatDate, initials } from "@/lib/rede";
+import { BADGE_KINDS, formatDate, initials, isUuid } from "@/lib/rede";
 
 export const Route = createFileRoute("/perfil/$id")({
   head: () => ({
