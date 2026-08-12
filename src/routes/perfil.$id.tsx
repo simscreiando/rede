@@ -63,14 +63,13 @@ function ProfilePage() {
 
   const friendship = useQuery({
     queryKey: ["friendship", user?.id, id],
-    enabled: !!user && !isSelf,
+    enabled: !!user && !isSelf && isUuid(id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("friendships")
         .select("*")
-        .or(
-          `and(requester_id.eq.${user!.id},addressee_id.eq.${id}),and(requester_id.eq.${id},addressee_id.eq.${user!.id})`,
-        )
+        .in("requester_id", [user!.id, id])
+        .in("addressee_id", [user!.id, id])
         .maybeSingle();
       if (error) throw error;
       return data;
