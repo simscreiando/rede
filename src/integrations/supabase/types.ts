@@ -75,6 +75,7 @@ export type Database = {
           creator_id: string
           description: string | null
           id: string
+          is_open: boolean
           name: string
           slug: string
         }
@@ -84,6 +85,7 @@ export type Database = {
           creator_id: string
           description?: string | null
           id?: string
+          is_open?: boolean
           name: string
           slug: string
         }
@@ -93,6 +95,7 @@ export type Database = {
           creator_id?: string
           description?: string | null
           id?: string
+          is_open?: boolean
           name?: string
           slug?: string
         }
@@ -408,23 +411,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      are_friends: { Args: { _a: string; _b: string }; Returns: boolean }
-      can_view_profile: {
-        Args: { _profile: string; _viewer: string }
-        Returns: boolean
-      }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_community_member: {
-        Args: { _community: string; _user: string }
-        Returns: boolean
-      }
-      is_moderator: { Args: { _user_id: string }; Returns: boolean }
+      [_ in never]: never
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
