@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/rede";
@@ -26,7 +25,7 @@ export const Route = createFileRoute("/comunidades/")({
       { property: "og:title", content: "Comunidades na Rede" },
       {
         property: "og:description",
-        content: "Crie ou entre em comunidades temáticas com moderação própria e regras claras.",
+        content: "Crie ou entre em comunidades temáticas com tópicos e regras claras.",
       },
     ],
   }),
@@ -44,9 +43,8 @@ function CommunitiesPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [rules, setRules] = useState("");
-  const [isPrivate, setIsPrivate] = useState(false);
   const [creating, setCreating] = useState(false);
 
   const communities = useQuery({
@@ -54,7 +52,7 @@ function CommunitiesPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("communities")
-        .select("*")
+        .select("id, slug, name, description, category")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data ?? [];
@@ -67,7 +65,7 @@ function CommunitiesPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("community_members")
-        .select("community_id, status, role")
+        .select("community_id")
         .eq("user_id", user!.id);
       if (error) throw error;
       return data ?? [];
@@ -88,10 +86,9 @@ function CommunitiesPage() {
         name: name.trim(),
         slug,
         description: description.trim() || null,
-        rules: rules.trim() || null,
-        visibility: isPrivate ? "private" : "public",
+        category: category.trim() || null,
       })
-      .select("slug")
+      .select("id, slug")
       .single();
 
     if (error || !data) {
@@ -100,24 +97,16 @@ function CommunitiesPage() {
       return;
     }
 
-    await supabase.from("community_members").insert({
-      community_id: (await getCommunityId(data.slug)) ?? "",
-      user_id: user!.id,
-      role: "owner",
-      status: "approved",
-    });
+    await supabase
+      .from("community_members")
+      .insert({ community_id: data.id, user_id: user!.id, is_private: false });
 
     setCreating(false);
     setName("");
+    setCategory("");
     setDescription("");
-    setRules("");
     void queryClient.invalidateQueries({ queryKey: ["communities"] });
     void navigate({ to: "/comunidades/$slug", params: { slug: data.slug } });
-  }
-
-  async function getCommunityId(slug: string) {
-    const { data } = await supabase.from("communities").select("id").eq("slug", slug).maybeSingle();
-    return data?.id ?? null;
   }
 
   const memberOf = new Set((myMemberships.data ?? []).map((m) => m.community_id));
@@ -127,7 +116,8 @@ function CommunitiesPage() {
       <section className="paper-card p-6">
         <h1 className="text-2xl">Comunidades</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Espaços pequenos e temáticos. Comunidades privadas exigem aprovação de entrada.
+          Espaços pequenos e temáticos, com tópicos em ordem cronológica. Você decide se sua
+          participação aparece para as outras pessoas.
         </p>
       </section>
 
@@ -139,29 +129,23 @@ function CommunitiesPage() {
             <Input id="nome-com" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="space-y-1.5">
+            <Label htmlFor="cat-com">Categoria (opcional)</Label>
+            <Input
+              id="cat-com"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="música, livros, cidade…"
+            />
+          </div>
+          <div className="space-y-1.5">
             <Label htmlFor="desc-com">Sobre o que é</Label>
             <Textarea
               id="desc-com"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="Descreva o tema e combine as regras de convivência desde já."
             />
           </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="regras-com">Regras da comunidade</Label>
-            <Textarea
-              id="regras-com"
-              value={rules}
-              onChange={(e) => setRules(e.target.value)}
-              placeholder="Combine desde já o que é aceitável aqui. Isso orienta a moderação."
-            />
-          </div>
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Checkbox
-              checked={isPrivate}
-              onCheckedChange={(checked) => setIsPrivate(checked === true)}
-            />
-            Comunidade privada (entrada por aprovação)
-          </label>
           <Button onClick={createCommunity} disabled={creating}>
             Criar comunidade
           </Button>
@@ -172,7 +156,9 @@ function CommunitiesPage() {
         <h2 className="text-lg">Comunidades existentes</h2>
         <ul className="mt-4 space-y-4">
           {(communities.data ?? []).length === 0 ? (
-            <li className="text-sm text-muted-foreground">Nenhuma comunidade ainda. Crie a primeira.</li>
+            <li className="text-sm text-muted-foreground">
+              Nenhuma comunidade ainda. Crie a primeira.
+            </li>
           ) : null}
           {(communities.data ?? []).map((community) => (
             <li key={community.id} className="border-b border-border pb-4 last:border-none">
@@ -184,7 +170,7 @@ function CommunitiesPage() {
                 {community.name}
               </Link>
               <p className="text-xs text-muted-foreground">
-                {community.visibility === "private" ? "privada" : "pública"}
+                {community.category ?? "sem categoria"}
                 {memberOf.has(community.id) ? " · você participa" : ""}
               </p>
               {community.description ? (
