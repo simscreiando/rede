@@ -63,6 +63,14 @@ function ProfilePage() {
     },
   });
 
+  const displayName = profile.data?.display_name;
+  useEffect(() => {
+    if (!displayName) return;
+    document.title = `Perfil de ${displayName} — Rede`;
+  }, [displayName]);
+
+
+
   const friendship = useQuery({
     queryKey: ["friendship", user?.id, id],
     enabled: !!user && !isSelf && isUuid(id),
