@@ -70,11 +70,18 @@ function FriendsPage() {
   const { nameOf } = useProfileNames(rows.flatMap((r) => [r.requester_id, r.addressee_id]));
 
   async function search() {
-    if (term.trim().length < 2) return;
+    const raw = term.trim();
+    if (raw.length < 2) return;
+    // Remove PostgREST filter syntax characters so user text can never alter the query structure.
+    const safe = raw.replace(/[,.()"\\%*]/g, " ").trim().slice(0, 60);
+    if (safe.length < 2) {
+      toast.error("Use letras e números na busca.");
+      return;
+    }
     const { data, error } = await supabase
       .from("profiles")
       .select("id, display_name, username")
-      .or(`display_name.ilike.%${term.trim()}%,username.ilike.%${term.trim()}%`)
+      .or(`display_name.ilike."%${safe}%",username.ilike."%${safe}%"`)
       .neq("id", user!.id)
       .limit(12);
     if (error) {
