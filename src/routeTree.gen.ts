@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AmigosRouteImport } from './routes/amigos'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
 import { Route as ComunidadesSlugRouteImport } from './routes/comunidades.$slug'
 import { Route as ConfiguracoesDadosRouteImport } from './routes/configuracoes.dados'
@@ -37,6 +38,11 @@ const AuthRoute = AuthRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComunidadesIndexRoute = ComunidadesIndexRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/amigos': typeof AmigosRoute
   '/auth': typeof AuthRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
   '/comunidades/$slug': typeof ComunidadesSlugRoute
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/privacidade'
+    | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/privacidade'
+    | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/amigos'
     | '/auth'
     | '/privacidade'
+    | '/termos'
     | '/comunidades/$slug'
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AmigosRoute: typeof AmigosRoute
   AuthRoute: typeof AuthRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  TermosRoute: typeof TermosRoute
   ComunidadesSlugRoute: typeof ComunidadesSlugRoute
   ConfiguracoesDadosRoute: typeof ConfiguracoesDadosRoute
   ConfiguracoesPerfilRoute: typeof ConfiguracoesPerfilRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comunidades/': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AmigosRoute: AmigosRoute,
   AuthRoute: AuthRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  TermosRoute: TermosRoute,
   ComunidadesSlugRoute: ComunidadesSlugRoute,
   ConfiguracoesDadosRoute: ConfiguracoesDadosRoute,
   ConfiguracoesPerfilRoute: ConfiguracoesPerfilRoute,
