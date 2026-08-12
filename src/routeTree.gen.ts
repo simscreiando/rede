@@ -10,33 +10,180 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AmigosRouteImport } from './routes/amigos'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DiretrizesRouteImport } from './routes/diretrizes'
+import { Route as ModeracaoRouteImport } from './routes/moderacao'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as TermosRouteImport } from './routes/termos'
+import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
+import { Route as ComunidadesSlugRouteImport } from './routes/comunidades.$slug'
+import { Route as ConfiguracoesDadosRouteImport } from './routes/configuracoes.dados'
+import { Route as ConfiguracoesPerfilRouteImport } from './routes/configuracoes.perfil'
+import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AmigosRoute = AmigosRouteImport.update({
+  id: '/amigos',
+  path: '/amigos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiretrizesRoute = DiretrizesRouteImport.update({
+  id: '/diretrizes',
+  path: '/diretrizes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModeracaoRoute = ModeracaoRouteImport.update({
+  id: '/moderacao',
+  path: '/moderacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadesIndexRoute = ComunidadesIndexRouteImport.update({
+  id: '/comunidades/',
+  path: '/comunidades/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadesSlugRoute = ComunidadesSlugRouteImport.update({
+  id: '/comunidades/$slug',
+  path: '/comunidades/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesDadosRoute = ConfiguracoesDadosRouteImport.update({
+  id: '/configuracoes/dados',
+  path: '/configuracoes/dados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesPerfilRoute = ConfiguracoesPerfilRouteImport.update({
+  id: '/configuracoes/perfil',
+  path: '/configuracoes/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilIdRoute = PerfilIdRouteImport.update({
+  id: '/perfil/$id',
+  path: '/perfil/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/amigos': typeof AmigosRoute
+  '/auth': typeof AuthRoute
+  '/diretrizes': typeof DiretrizesRoute
+  '/moderacao': typeof ModeracaoRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
+  '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/dados': typeof ConfiguracoesDadosRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/amigos': typeof AmigosRoute
+  '/auth': typeof AuthRoute
+  '/diretrizes': typeof DiretrizesRoute
+  '/moderacao': typeof ModeracaoRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
+  '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/dados': typeof ConfiguracoesDadosRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/comunidades': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/amigos': typeof AmigosRoute
+  '/auth': typeof AuthRoute
+  '/diretrizes': typeof DiretrizesRoute
+  '/moderacao': typeof ModeracaoRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/termos': typeof TermosRoute
+  '/comunidades/$slug': typeof ComunidadesSlugRoute
+  '/configuracoes/dados': typeof ConfiguracoesDadosRoute
+  '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/amigos'
+    | '/auth'
+    | '/diretrizes'
+    | '/moderacao'
+    | '/privacidade'
+    | '/termos'
+    | '/comunidades/$slug'
+    | '/configuracoes/dados'
+    | '/configuracoes/perfil'
+    | '/perfil/$id'
+    | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/amigos'
+    | '/auth'
+    | '/diretrizes'
+    | '/moderacao'
+    | '/privacidade'
+    | '/termos'
+    | '/comunidades/$slug'
+    | '/configuracoes/dados'
+    | '/configuracoes/perfil'
+    | '/perfil/$id'
+    | '/comunidades'
+  id:
+    | '__root__'
+    | '/'
+    | '/amigos'
+    | '/auth'
+    | '/diretrizes'
+    | '/moderacao'
+    | '/privacidade'
+    | '/termos'
+    | '/comunidades/$slug'
+    | '/configuracoes/dados'
+    | '/configuracoes/perfil'
+    | '/perfil/$id'
+    | '/comunidades/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AmigosRoute: typeof AmigosRoute
+  AuthRoute: typeof AuthRoute
+  DiretrizesRoute: typeof DiretrizesRoute
+  ModeracaoRoute: typeof ModeracaoRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  TermosRoute: typeof TermosRoute
+  ComunidadesSlugRoute: typeof ComunidadesSlugRoute
+  ConfiguracoesDadosRoute: typeof ConfiguracoesDadosRoute
+  ConfiguracoesPerfilRoute: typeof ConfiguracoesPerfilRoute
+  PerfilIdRoute: typeof PerfilIdRoute
+  ComunidadesIndexRoute: typeof ComunidadesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +195,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/amigos': {
+      id: '/amigos'
+      path: '/amigos'
+      fullPath: '/amigos'
+      preLoaderRoute: typeof AmigosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diretrizes': {
+      id: '/diretrizes'
+      path: '/diretrizes'
+      fullPath: '/diretrizes'
+      preLoaderRoute: typeof DiretrizesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moderacao': {
+      id: '/moderacao'
+      path: '/moderacao'
+      fullPath: '/moderacao'
+      preLoaderRoute: typeof ModeracaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidades/': {
+      id: '/comunidades/'
+      path: '/comunidades'
+      fullPath: '/comunidades/'
+      preLoaderRoute: typeof ComunidadesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidades/$slug': {
+      id: '/comunidades/$slug'
+      path: '/comunidades/$slug'
+      fullPath: '/comunidades/$slug'
+      preLoaderRoute: typeof ComunidadesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes/dados': {
+      id: '/configuracoes/dados'
+      path: '/configuracoes/dados'
+      fullPath: '/configuracoes/dados'
+      preLoaderRoute: typeof ConfiguracoesDadosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes/perfil': {
+      id: '/configuracoes/perfil'
+      path: '/configuracoes/perfil'
+      fullPath: '/configuracoes/perfil'
+      preLoaderRoute: typeof ConfiguracoesPerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil/$id': {
+      id: '/perfil/$id'
+      path: '/perfil/$id'
+      fullPath: '/perfil/$id'
+      preLoaderRoute: typeof PerfilIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AmigosRoute: AmigosRoute,
+  AuthRoute: AuthRoute,
+  DiretrizesRoute: DiretrizesRoute,
+  ModeracaoRoute: ModeracaoRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  TermosRoute: TermosRoute,
+  ComunidadesSlugRoute: ComunidadesSlugRoute,
+  ConfiguracoesDadosRoute: ConfiguracoesDadosRoute,
+  ConfiguracoesPerfilRoute: ConfiguracoesPerfilRoute,
+  PerfilIdRoute: PerfilIdRoute,
+  ComunidadesIndexRoute: ComunidadesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
