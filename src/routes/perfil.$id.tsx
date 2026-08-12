@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { BADGE_KINDS, badgeLabel, formatDate, initials } from "@/lib/rede";
+import { BADGE_KINDS, formatDate, initials, isUuid } from "@/lib/rede";
 
 export const Route = createFileRoute("/perfil/$id")({
   head: () => ({
@@ -63,14 +63,13 @@ function ProfilePage() {
 
   const friendship = useQuery({
     queryKey: ["friendship", user?.id, id],
-    enabled: !!user && !isSelf,
+    enabled: !!user && !isSelf && isUuid(id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("friendships")
         .select("*")
-        .or(
-          `and(requester_id.eq.${user!.id},addressee_id.eq.${id}),and(requester_id.eq.${id},addressee_id.eq.${user!.id})`,
-        )
+        .in("requester_id", [user!.id, id])
+        .in("addressee_id", [user!.id, id])
         .maybeSingle();
       if (error) throw error;
       return data;
