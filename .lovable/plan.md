@@ -16,7 +16,7 @@ O que acontece hoje: o login manda a pessoa de volta para `redesaudade.lovable.a
 
 Ordem para resolver:
 
-1. Publicar o site (você confirmou que vai publicar). Isso cria o endereço estável de verdade.
+1. Usar o endereço real onde o site já está no ar pela Vercel: `https://redesaudade.vercel.app`.
 2. Registrar esse endereço na configuração de autenticação como destino autorizado do Google, e ajustar o retorno do login para uma rota pública de retorno (`/auth/callback`) que espera a sessão ficar pronta antes de levar a pessoa ao perfil.
 3. Confirmar que o provedor Google está ativo na autenticação do projeto.
 4. Testar o fluxo completo já publicado: senha do site → entrar com Google → checagem de convite → perfil.
