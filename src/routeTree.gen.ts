@@ -11,12 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AmigosRouteImport } from './routes/amigos'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DiretrizesRouteImport } from './routes/diretrizes'
 import { Route as ModeracaoRouteImport } from './routes/moderacao'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as AuthIndexRouteImport } from './routes/auth.index'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
 import { Route as ComunidadesSlugRouteImport } from './routes/comunidades.$slug'
 import { Route as ConfiguracoesDadosRouteImport } from './routes/configuracoes.dados'
@@ -31,11 +31,6 @@ const IndexRoute = IndexRouteImport.update({
 const AmigosRoute = AmigosRouteImport.update({
   id: '/amigos',
   path: '/amigos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiretrizesRoute = DiretrizesRouteImport.update({
@@ -61,6 +56,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
   path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComunidadesIndexRoute = ComunidadesIndexRouteImport.update({
@@ -92,7 +92,6 @@ const PerfilIdRoute = PerfilIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/amigos': typeof AmigosRoute
-  '/auth': typeof AuthRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -102,12 +101,12 @@ export interface FileRoutesByFullPath {
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/amigos': typeof AmigosRoute
-  '/auth': typeof AuthRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -117,13 +116,13 @@ export interface FileRoutesByTo {
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/auth': typeof AuthIndexRoute
   '/comunidades': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/amigos': typeof AmigosRoute
-  '/auth': typeof AuthRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -133,6 +132,7 @@ export interface FileRoutesById {
   '/configuracoes/dados': typeof ConfiguracoesDadosRoute
   '/configuracoes/perfil': typeof ConfiguracoesPerfilRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRouteTypes {
@@ -140,7 +140,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/amigos'
-    | '/auth'
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
@@ -150,12 +149,12 @@ export interface FileRouteTypes {
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
     | '/perfil/$id'
+    | '/auth/'
     | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/amigos'
-    | '/auth'
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
@@ -165,12 +164,12 @@ export interface FileRouteTypes {
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
     | '/perfil/$id'
+    | '/auth'
     | '/comunidades'
   id:
     | '__root__'
     | '/'
     | '/amigos'
-    | '/auth'
     | '/diretrizes'
     | '/moderacao'
     | '/privacidade'
@@ -180,13 +179,13 @@ export interface FileRouteTypes {
     | '/configuracoes/dados'
     | '/configuracoes/perfil'
     | '/perfil/$id'
+    | '/auth/'
     | '/comunidades/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AmigosRoute: typeof AmigosRoute
-  AuthRoute: typeof AuthRoute
   DiretrizesRoute: typeof DiretrizesRoute
   ModeracaoRoute: typeof ModeracaoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -196,6 +195,7 @@ export interface RootRouteChildren {
   ConfiguracoesDadosRoute: typeof ConfiguracoesDadosRoute
   ConfiguracoesPerfilRoute: typeof ConfiguracoesPerfilRoute
   PerfilIdRoute: typeof PerfilIdRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   ComunidadesIndexRoute: typeof ComunidadesIndexRoute
 }
 
@@ -213,13 +213,6 @@ declare module '@tanstack/react-router' {
       path: '/amigos'
       fullPath: '/amigos'
       preLoaderRoute: typeof AmigosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diretrizes': {
@@ -255,6 +248,13 @@ declare module '@tanstack/react-router' {
       path: '/termos'
       fullPath: '/termos'
       preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comunidades/': {
@@ -298,7 +298,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AmigosRoute: AmigosRoute,
-  AuthRoute: AuthRoute,
   DiretrizesRoute: DiretrizesRoute,
   ModeracaoRoute: ModeracaoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
@@ -308,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfiguracoesDadosRoute: ConfiguracoesDadosRoute,
   ConfiguracoesPerfilRoute: ConfiguracoesPerfilRoute,
   PerfilIdRoute: PerfilIdRoute,
+  AuthIndexRoute: AuthIndexRoute,
   ComunidadesIndexRoute: ComunidadesIndexRoute,
 }
 export const routeTree = rootRouteImport
