@@ -227,6 +227,36 @@ export type Database = {
         }
         Relationships: []
       }
+      invited_emails: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          invited_by: string | null
+          note: string | null
+          updated_at: string
+          used_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          invited_by?: string | null
+          note?: string | null
+          updated_at?: string
+          used_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          invited_by?: string | null
+          note?: string | null
+          updated_at?: string
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       moderation_actions: {
         Row: {
           action: string
