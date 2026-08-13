@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as AmigosRouteImport } from './routes/amigos'
 import { Route as DiretrizesRouteImport } from './routes/diretrizes'
 import { Route as ModeracaoRouteImport } from './routes/moderacao'
@@ -26,6 +27,11 @@ import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcessoRoute = AcessoRouteImport.update({
+  id: '/acesso',
+  path: '/acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AmigosRoute = AmigosRouteImport.update({
@@ -91,6 +97,7 @@ const PerfilIdRoute = PerfilIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/amigos': typeof AmigosRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/amigos': typeof AmigosRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
@@ -122,6 +130,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/amigos': typeof AmigosRoute
   '/diretrizes': typeof DiretrizesRoute
   '/moderacao': typeof ModeracaoRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acesso'
     | '/amigos'
     | '/diretrizes'
     | '/moderacao'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acesso'
     | '/amigos'
     | '/diretrizes'
     | '/moderacao'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/acesso'
     | '/amigos'
     | '/diretrizes'
     | '/moderacao'
@@ -185,6 +197,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessoRoute: typeof AcessoRoute
   AmigosRoute: typeof AmigosRoute
   DiretrizesRoute: typeof DiretrizesRoute
   ModeracaoRoute: typeof ModeracaoRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acesso': {
+      id: '/acesso'
+      path: '/acesso'
+      fullPath: '/acesso'
+      preLoaderRoute: typeof AcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/amigos': {
@@ -297,6 +317,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessoRoute: AcessoRoute,
   AmigosRoute: AmigosRoute,
   DiretrizesRoute: DiretrizesRoute,
   ModeracaoRoute: ModeracaoRoute,
