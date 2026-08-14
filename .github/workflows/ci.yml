@@ -1,0 +1,46 @@
+name: CI
+
+# Só valida o código (lint, typecheck, testes, build). O deploy de produção
+# e os previews de PR são feitos pela integração nativa GitHub↔Vercel, não
+# por este workflow — não há passo de deploy aqui de propósito.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Instalar dependências
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Testes
+        run: bun run test
+
+      - name: Build
+        run: bun run build
+        env:
+          # Valores fictícios só para o build de CI conseguir rodar — o
+          # runtime real usa as variáveis configuradas na Vercel.
+          VITE_PUBLIC_APP_URL: "https://ci.example.com"
+          VITE_SUPABASE_URL: "https://ci-placeholder.supabase.co"
+          VITE_SUPABASE_PUBLISHABLE_KEY: "ci-placeholder-key"
+
+      - name: Verificar que a service-role key não vazou para o bundle do cliente (TESTE 12)
+        run: bun run verify:bundle
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: "ci-placeholder-service-role-key-value"

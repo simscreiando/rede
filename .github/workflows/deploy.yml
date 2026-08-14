@@ -1,2 +1,0 @@
-- name: Vite Github Pages Deployer
-  uses: skywarth/vite-github-pages-deployer@v1.5.0
