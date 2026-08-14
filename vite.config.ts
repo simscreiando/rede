@@ -3,7 +3,6 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
-import { nitro } from "nitro/vite";
 
 // Configuração própria da Saudade Social — sem @lovable.dev/vite-tanstack-config.
 // O preset do Nitro é explicitamente "vercel" (deploy alvo definido na spec),
@@ -18,7 +17,6 @@ export default defineConfig({
         entry: "server",
       },
     }),
-    nitro(),
     viteReact(),
   ],
   server: {
