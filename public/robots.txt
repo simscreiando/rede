@@ -1,4 +1,0 @@
-# Closed beta: a aplicação não deve ser indexada enquanto o acesso é
-# restrito. Revisar esta regra quando BETA_MODE_ENABLED for desligado.
-User-agent: *
-Disallow: /
